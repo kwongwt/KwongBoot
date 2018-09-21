@@ -46,6 +46,12 @@
 		    <groupId>org.apache.commons</groupId>
 		    <artifactId>commons-lang3</artifactId>
 		</dependency>
+		<!-- json  -->
+		<dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.47</version>
+        </dependency>
 		<!-- warm start -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

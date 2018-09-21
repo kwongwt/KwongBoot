@@ -48,11 +48,11 @@ public class User extends Entitys implements Serializable {
 	/**
 	 * 角色
 	 */
-	private Integer roleid;
+	private Integer roleId;
 	/**
 	 * 部门
 	 */
-	private Integer deptid;
+	private Integer deptId;
 	/**
 	 * 创建时间
 	 */
@@ -117,20 +117,20 @@ public class User extends Entitys implements Serializable {
 		this.avatar = avatar;
 	}
 
-	public Integer getRoleid() {
-		return roleid;
+	public Integer getRoleId() {
+		return roleId;
 	}
 
-	public void setRoleid(Integer roleid) {
-		this.roleid = roleid;
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
 	}
 
-	public Integer getDeptid() {
-		return deptid;
+	public Integer getDeptId() {
+		return deptId;
 	}
 
-	public void setDeptid(Integer deptid) {
-		this.deptid = deptid;
+	public void setDeptId(Integer deptId) {
+		this.deptId = deptId;
 	}
 
 	public Long getCreateTime() {
