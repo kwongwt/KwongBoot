@@ -1,4 +1,4 @@
-package com.stylefeng.guns.core.util;
+package com.kwong.boot.core.util;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;

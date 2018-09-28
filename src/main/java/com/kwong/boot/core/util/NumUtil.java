@@ -1,4 +1,4 @@
-package com.stylefeng.guns.core.util;
+package com.kwong.boot.core.util;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

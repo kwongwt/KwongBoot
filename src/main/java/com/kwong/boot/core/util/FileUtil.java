@@ -1,15 +1,16 @@
-package com.stylefeng.guns.core.util;
-
-import com.stylefeng.guns.core.exception.GunsException;
-import com.stylefeng.guns.core.exception.GunsExceptionEnum;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package com.kwong.boot.core.util;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.kwong.boot.core.exception.GunsException;
+import com.kwong.boot.core.exception.GunsExceptionEnum;
 
 public class FileUtil {
 

@@ -6,8 +6,8 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletResponse;
 
 import com.alibaba.fastjson.JSON;
-import com.stylefeng.guns.core.exception.GunsException;
-import com.stylefeng.guns.core.exception.GunsExceptionEnum;
+import com.kwong.boot.core.exception.GunsException;
+import com.kwong.boot.core.exception.GunsExceptionEnum;
 
 /**
  * 渲染工具类

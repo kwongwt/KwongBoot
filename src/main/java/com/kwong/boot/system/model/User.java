@@ -64,7 +64,7 @@ public class User extends Entitys implements Serializable {
 	@Column(nullable = false)
 	private Long editTime;
     /**
-     * 状态(1：启用  2：冻结  3：删除）
+     * 	 状态(1：启用  2：冻结  3：删除）
      */
 	@Column(nullable = false)
 	private Integer status;
@@ -156,6 +156,7 @@ public class User extends Entitys implements Serializable {
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
+
 	
 	
 }
