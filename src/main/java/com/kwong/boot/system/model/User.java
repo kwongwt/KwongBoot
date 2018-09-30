@@ -1,6 +1,7 @@
 package com.kwong.boot.system.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -17,20 +18,18 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
-
 /**
- * @author kwong
- *	用户表
+ * @author kwong 用户表
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "sys_user") 
+@Table(name = "sys_user")
 public class User extends Entitys implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	/**
 	 * 账号
 	 */
@@ -46,7 +45,7 @@ public class User extends Entitys implements Serializable {
 	 */
 	private String salt;
 	/**
-	 *  用户名称
+	 * 用户名称
 	 */
 	private String name;
 	/**
@@ -66,25 +65,26 @@ public class User extends Entitys implements Serializable {
 	 * 创建时间
 	 */
 	@Column(nullable = false, name = "create_time")
-	private Long createTime;
+	private Date createTime;
 	/**
 	 * 修改时间
 	 */
 	@Column(nullable = false, name = "edit_time")
-	private Long editTime;
-    /**
-     * 	 状态(1：启用  2：冻结  3：删除）
-     */
+	private Date editTime;
+	/**
+	 * 状态(1：启用 2：冻结 3：删除）
+	 */
 	@Column(nullable = false)
 	private Integer status;
-    /**
-     *  用户角色连接表
-     */
-    @ManyToMany(fetch= FetchType.EAGER)//立即从数据库中进行加载数据;
-    @Fetch(FetchMode.SUBSELECT)
-    @JoinTable(name = "sys_link_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns ={@JoinColumn(name = "role_id") })
-    private List<Role> roleList;
-	
+	/**
+	 * 用户角色连接表
+	 */
+	@ManyToMany(fetch = FetchType.EAGER) // 立即从数据库中进行加载数据;
+	@Fetch(FetchMode.SUBSELECT)
+	@JoinTable(name = "sys_link_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "role_id") })
+	private List<Role> roleList;
+
 	public Long getId() {
 		return id;
 	}
@@ -148,20 +148,20 @@ public class User extends Entitys implements Serializable {
 	public void setDeptId(Integer deptId) {
 		this.deptId = deptId;
 	}
-
-	public Long getCreateTime() {
+	
+	public Date getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(Long createTime) {
+	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
 
-	public Long getEditTime() {
+	public Date getEditTime() {
 		return editTime;
 	}
 
-	public void setEditTime(Long editTime) {
+	public void setEditTime(Date editTime) {
 		this.editTime = editTime;
 	}
 
@@ -180,5 +180,5 @@ public class User extends Entitys implements Serializable {
 	public void setRoleList(List<Role> roleList) {
 		this.roleList = roleList;
 	}
-	
+
 }
