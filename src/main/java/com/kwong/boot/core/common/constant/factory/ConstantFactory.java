@@ -1,27 +1,17 @@
 //package com.kwong.boot.core.common.constant.factory;
 //
-//import java.awt.Menu;
+//import com.baomidou.mybatisplus.mapper.EntityWrapper;
+//import com.baomidou.mybatisplus.mapper.Wrapper;
+//import com.kwong.boot.core.util.SpringContextHolder;
+//import com.kwong.boot.system.model.User;
+//import com.kwong.boot.system.repository.UserRepository;
+//
 //import java.util.ArrayList;
 //import java.util.List;
 //
-//import org.springframework.cache.annotation.Cacheable;
+//import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.context.annotation.DependsOn;
 //import org.springframework.stereotype.Component;
-//
-//import com.baomidou.mybatisplus.mapper.EntityWrapper;
-//import com.kwong.boot.core.support.StrKit;
-//import com.kwong.boot.core.util.Convert;
-//import com.kwong.boot.core.util.SpringContextHolder;
-//import com.kwong.boot.core.util.ToolUtil;
-//import com.kwong.boot.system.model.Role;
-//import com.kwong.boot.system.model.User;
-//import com.mysql.jdbc.Wrapper;
-//import com.stylefeng.guns.core.common.constant.cache.CacheKey;
-//import com.stylefeng.guns.core.common.constant.state.ManagerStatus;
-//import com.stylefeng.guns.core.common.constant.state.MenuStatus;
-//import com.stylefeng.guns.core.log.LogObjectHolder;
-//import com.stylefeng.guns.modular.system.dao.*;
-//import com.stylefeng.guns.modular.system.model.*;
 //
 ///**
 // * 常量的生产工厂
@@ -33,12 +23,8 @@
 //@DependsOn("springContextHolder")
 //public class ConstantFactory implements IConstantFactory {
 //
-//    private RoleMapper roleMapper = SpringContextHolder.getBean(RoleMapper.class);
-//    private DeptMapper deptMapper = SpringContextHolder.getBean(DeptMapper.class);
-//    private DictMapper dictMapper = SpringContextHolder.getBean(DictMapper.class);
-//    private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
-//    private MenuMapper menuMapper = SpringContextHolder.getBean(MenuMapper.class);
-//    private NoticeMapper noticeMapper = SpringContextHolder.getBean(NoticeMapper.class);
+//	@Autowired
+//    private UserRepository userRepository;
 //
 //    public static IConstantFactory me() {
 //        return SpringContextHolder.getBean("constantFactory");
@@ -112,8 +98,6 @@
 //    /**
 //     * 通过角色id获取角色英文名称
 //     */
-//    @Override
-//    @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_ROLE_TIP + "'+#roleId")
 //    public String getSingleRoleTip(Integer roleId) {
 //        if (0 == roleId) {
 //            return "--";

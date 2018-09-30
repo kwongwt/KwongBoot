@@ -1,13 +1,21 @@
 package com.kwong.boot.system.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 /**
  * @author kwong 资源表
@@ -56,20 +64,30 @@ public class Resource extends Entitys implements Serializable {
 	/**
 	 * 菜单类型（1:菜单，2：按钮）
 	 */
+	@Column(name = "resource_type")
 	private Integer resourceType;
 	/**
 	 * 菜单状态 : 1:启用 0:不启用
 	 */
-	private Integer status;
+	@Column(name = "is_use")
+	private Integer useStatus;
 	/**
 	 * 是否打开: 1:打开 0:不打开
 	 */
-	private Integer isopen;
+	@Column(name = "is_open")
+	private Integer openStatus;
 	/**
 	 * 备注
 	 */
 	private String tips;
-
+    /**
+     * 	用户角色连接表
+     */
+    @ManyToMany(fetch= FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinTable(name = "sys_link_role_resource", joinColumns = { @JoinColumn(name = "resource_id") }, inverseJoinColumns ={@JoinColumn(name = "role_id") })
+    private List<Role> roleList;
+    
 	public Long getId() {
 		return id;
 	}
@@ -150,20 +168,20 @@ public class Resource extends Entitys implements Serializable {
 		this.resourceType = resourceType;
 	}
 
-	public Integer getStatus() {
-		return status;
+	public Integer getUseStatus() {
+		return useStatus;
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
+	public void setUseStatus(Integer useStatus) {
+		this.useStatus = useStatus;
 	}
 
-	public Integer getIsopen() {
-		return isopen;
+	public Integer getOpenStatus() {
+		return openStatus;
 	}
 
-	public void setIsopen(Integer isopen) {
-		this.isopen = isopen;
+	public void setOpenStatus(Integer openStatus) {
+		this.openStatus = openStatus;
 	}
 
 	public String getTips() {
@@ -174,4 +192,11 @@ public class Resource extends Entitys implements Serializable {
 		this.tips = tips;
 	}
 
+	public List<Role> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
+	}
 }

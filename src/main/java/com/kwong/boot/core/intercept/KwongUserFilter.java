@@ -38,6 +38,11 @@ import com.kwong.boot.core.shiro.ShiroKit;
  *
  * @since 0.9
  */
+/** 
+* @Description:
+* @author: kwong
+* @date: Sep 28, 2018
+*/ 
 public class KwongUserFilter extends AccessControlFilter {
 
     /**
@@ -51,6 +56,7 @@ public class KwongUserFilter extends AccessControlFilter {
      * if the current {@link #getSubject(javax.servlet.ServletRequest, javax.servlet.ServletResponse) subject}
      * is not <code>null</code>, <code>false</code> otherwise.
      */
+	@Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
         if (isLoginRequest(request, response)) {
             return true;
@@ -67,6 +73,7 @@ public class KwongUserFilter extends AccessControlFilter {
      * and then immediately returns <code>false</code>, thereby preventing the chain from continuing so the redirect may
      * execute.
      */
+	@Override
     protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpServletRequest = WebUtils.toHttp(request);
         HttpServletResponse httpServletResponse = WebUtils.toHttp(response);

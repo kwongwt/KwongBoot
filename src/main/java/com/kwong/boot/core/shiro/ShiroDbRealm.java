@@ -20,6 +20,11 @@ import com.kwong.boot.core.shiro.factory.ShiroFactroy;
 import com.kwong.boot.core.util.ToolUtil;
 import com.kwong.boot.system.model.User;
 
+/** 
+* @Description:
+* @author: kwong
+* @date: Sep 28, 2018
+*/ 
 public class ShiroDbRealm extends AuthorizingRealm {
 
     /**
@@ -48,7 +53,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
         Set<String> roleNameSet = new HashSet<>();
 
         for (Integer roleId : roleList) {
-            List<String> permissions = shiroFactory.findPermissionsByRoleId(roleId);
+            List<String> permissions = shiroFactory.findResourcesByRoleId(roleId);
             if (permissions != null) {
                 for (String permission : permissions) {
                     if (ToolUtil.isNotEmpty(permission)) {

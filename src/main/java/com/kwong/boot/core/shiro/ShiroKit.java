@@ -15,16 +15,12 @@
  */
 package com.kwong.boot.core.shiro;
 
-import java.util.List;
-
-import org.apache.commons.collections.functors.ConstantFactory;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
-import org.apache.tomcat.util.bcel.Const;
 
 import com.kwong.boot.core.util.ToolUtil;
 

@@ -1,13 +1,22 @@
 package com.kwong.boot.system.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 
 /**
  * @author kwong
@@ -37,6 +46,10 @@ public class User extends Entitys implements Serializable {
 	 */
 	private String salt;
 	/**
+	 *  用户名称
+	 */
+	private String name;
+	/**
 	 * 邮箱
 	 */
 	@Column(nullable = false, unique = true)
@@ -46,29 +59,32 @@ public class User extends Entitys implements Serializable {
 	 */
 	private String avatar;
 	/**
-	 * 角色
-	 */
-	private Integer roleId;
-	/**
 	 * 部门
 	 */
 	private Integer deptId;
 	/**
 	 * 创建时间
 	 */
-	@Column(nullable = false)
+	@Column(nullable = false, name = "create_time")
 	private Long createTime;
 	/**
 	 * 修改时间
 	 */
-	@Column(nullable = false)
+	@Column(nullable = false, name = "edit_time")
 	private Long editTime;
     /**
      * 	 状态(1：启用  2：冻结  3：删除）
      */
 	@Column(nullable = false)
 	private Integer status;
-    
+    /**
+     *  用户角色连接表
+     */
+    @ManyToMany(fetch= FetchType.EAGER)//立即从数据库中进行加载数据;
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinTable(name = "sys_link_user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns ={@JoinColumn(name = "role_id") })
+    private List<Role> roleList;
+	
 	public Long getId() {
 		return id;
 	}
@@ -101,6 +117,14 @@ public class User extends Entitys implements Serializable {
 		this.salt = salt;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -115,14 +139,6 @@ public class User extends Entitys implements Serializable {
 
 	public void setAvatar(String avatar) {
 		this.avatar = avatar;
-	}
-
-	public Integer getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
 	}
 
 	public Integer getDeptId() {
@@ -157,6 +173,12 @@ public class User extends Entitys implements Serializable {
 		this.status = status;
 	}
 
-	
+	public List<Role> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = roleList;
+	}
 	
 }

@@ -1,13 +1,23 @@
 package com.kwong.boot.system.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+
 
 /**
  * @author kwong 角色表
@@ -21,23 +31,38 @@ public class Role extends Entitys implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	/**
-	 * 父角色id
+	 * 	父角色id
 	 */
 	private Integer pid;
 	/**
-	 * 角色名称
+	 * 	角色名称
 	 */
 	@Column(nullable = false, unique = true)
 	private String name;
 	/**
-	 * 部门id
+	 * 	部门id
 	 */
-	private String deptid;
+	@Column(name = "dept_id")
+	private String deptId;
 	/**
-	 * 备注
+	 * 	备注
 	 */
 	private String tips;
-
+    /**
+     * 	 角色资源连接表
+     */
+    @ManyToMany(fetch= FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinTable(name = "sys_link_role_resource",joinColumns = {@JoinColumn(name="role_id")}, inverseJoinColumns = {@JoinColumn(name="resource_id")})
+    private List<Resource> resourceList;
+    /**
+     * 	用户角色连接表
+     */
+    @ManyToMany(fetch= FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
+    @JoinTable(name = "sys_link_user_role", joinColumns = { @JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
+    private List<User> userList;
+    
 	public Integer getId() {
 		return id;
 	}
@@ -62,12 +87,12 @@ public class Role extends Entitys implements Serializable {
 		this.name = name;
 	}
 
-	public String getDeptid() {
-		return deptid;
+	public String getDeptId() {
+		return deptId;
 	}
 
-	public void setDeptid(String deptid) {
-		this.deptid = deptid;
+	public void setDeptId(String deptId) {
+		this.deptId = deptId;
 	}
 
 	public String getTips() {
@@ -76,6 +101,22 @@ public class Role extends Entitys implements Serializable {
 
 	public void setTips(String tips) {
 		this.tips = tips;
+	}
+
+	public List<Resource> getResourceList() {
+		return resourceList;
+	}
+
+	public void setResourceList(List<Resource> resourceList) {
+		this.resourceList = resourceList;
+	}
+
+	public List<User> getUserList() {
+		return userList;
+	}
+
+	public void setUserList(List<User> userList) {
+		this.userList = userList;
 	}
 
 }

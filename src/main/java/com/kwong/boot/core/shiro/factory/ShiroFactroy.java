@@ -1,11 +1,8 @@
 package com.kwong.boot.core.shiro.factory;
 
 
-import com.kwong.boot.core.shiro.ShiroUser;
-import com.kwong.boot.core.util.SpringContextHolder;
-import com.kwong.boot.system.model.User;
-import com.kwong.boot.system.repository.UserRepository;
-
+import java.util.ArrayList;
+import java.util.List;
 
 import org.apache.shiro.authc.CredentialsException;
 import org.apache.shiro.authc.LockedAccountException;
@@ -17,8 +14,17 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.kwong.boot.common.constant.state.ManagerStatus;
+//import com.kwong.boot.core.common.constant.factory.ConstantFactory;
+import com.kwong.boot.core.shiro.ShiroUser;
+import com.kwong.boot.core.util.Convert;
+import com.kwong.boot.core.util.SpringContextHolder;
+import com.kwong.boot.system.model.Resource;
+import com.kwong.boot.system.model.Role;
+import com.kwong.boot.system.model.User;
+import com.kwong.boot.system.repository.ResourceRepository;
+import com.kwong.boot.system.repository.RoleRepository;
+import com.kwong.boot.system.repository.UserRepository;
 
 @Service
 @DependsOn("springContextHolder")
@@ -27,6 +33,12 @@ public class ShiroFactroy implements IShiro {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
+    
+    @Autowired
+    private ResourceRepository resourceRepository;
 
 
     public static IShiro me() {
@@ -56,30 +68,28 @@ public class ShiroFactroy implements IShiro {
         shiroUser.setId(user.getId());
         shiroUser.setAccount(user.getUsername());
         shiroUser.setDeptId(user.getDeptId());
-        shiroUser.setDeptName(ConstantFactory.me().getDeptName(user.getDeptId()));
-
-        Integer[] roleArray = Convert.toIntArray(user.getRoleid());
-        List<Integer> roleList = new ArrayList<Integer>();
+        //shiroUser.setDeptName(ConstantFactory.me().getDeptName(user.getDeptId()));
+        
+        List<Role> roleList = user.getRoleList();
+        List<Integer> roleIdList = new ArrayList<Integer>();
         List<String> roleNameList = new ArrayList<String>();
-        for (int roleId : roleArray) {
-            roleList.add(roleId);
-            roleNameList.add(ConstantFactory.me().getSingleRoleName(roleId));
+        for (Role role : roleList) {
+        	roleIdList.add(role.getId());
+            roleNameList.add(role.getName());
         }
-        shiroUser.setRoleList(roleList);
+        shiroUser.setRoleList(roleIdList);
         shiroUser.setRoleNames(roleNameList);
-
         return shiroUser;
     }
 
-    @Override
-    public List<String> findResUrlsByRoleId(Integer roleId) {
-        return menuMapper.getResUrlsByRoleId(roleId);
+    public List<Resource> findResUrlsByRoleId(Integer roleId) {
+        return roleRepository.getOne(roleId).getResourceList();
     }
 
-    @Override
+    /*@Override
     public String findRoleNameByRoleId(Integer roleId) {
         return ConstantFactory.me().getSingleRoleTip(roleId);
-    }
+    }*/
 
     @Override
     public SimpleAuthenticationInfo info(ShiroUser shiroUser, User user, String realmName) {
@@ -90,5 +100,15 @@ public class ShiroFactroy implements IShiro {
         ByteSource credentialsSalt = new Md5Hash(source);
         return new SimpleAuthenticationInfo(shiroUser, credentials, credentialsSalt, realmName);
     }
+
+	@Override
+	public List<String> findResourcesByRoleId(Integer roleId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public String findRoleNameByRoleId(Integer roleId) {
+		return roleRepository.getNameById(roleId);
+	}
 
 }
